@@ -1,18 +1,18 @@
-import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group";
+"use client"
+import { getText } from '@/lib/chat'
+import React from 'react'
 
- const ChatBox =() => {
-    return (
-        <div className="chatbox"> 
- <InputGroup>
-        <InputGroupInput placeholder="Ask anything..." />
-        <InputGroupAddon align="inline-end">
-          <div className="bg-primary text-primary-foreground flex size-4 items-center justify-center rounded-full">
-            {/* <IconCheck className="size-3" /> */}
-          </div>
-        </InputGroupAddon>
-      </InputGroup>
-        </div>
-    )
+const Chatbox = () => {
+  const handleClick = async () => {
+   
+    const data = await getText();
+    console.log(data)
+  }
+  return (
+    <div>
+      <button onClick={handleClick}>Click me</button>
+    </div>
+  )
 }
 
-export default ChatBox;
+export default Chatbox

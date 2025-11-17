@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id                  Int        @id @default(autoincrement())
+  name                String
+  user                User       @relation(fields: [userId], references: [id])
+  userId              String
+  price               Float
+  description         String
+  inStock             Boolean    @default(true)
+  total_quantity      Int
+  min_order_quantity  Int
+  hsn_code            String
+  condition           Condition
+  category            String
+  preference          Preference
+  preferred_countries String[]   @default([])
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+}
+
+
+
+enum Condition {
+  new
+  used
+  refurbished
+}
+
+enum Preference {
+  private
+  selected_countries
+  public
+}
+
+
+model User {
+  id       String   @id @default(cuid())
+  
+  // Registration fields
+  fullName   String
+  jobTitle   String
+  workEmail  String   @unique
+  password   String
+  mobilePhone String
+
+  legalCompanyName        String
+  companyType             String
+  countryOfRegistration   String
+
+  streetAddress  String
+  city           String
+  state          String
+  postalCode     String
+  country        String
+
+  companyWebsite String
+
+  businessRegistrationNumber String
+  taxID                     String
+  documentFile              String?  // file path saved on server or storage
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Product relation
+  products Product[]
+}
+
