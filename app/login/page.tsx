@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { use, useState } from "react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
@@ -22,7 +22,9 @@ console.log("Submitting", formData);
       workEmail: formData.workEmail,
       password: formData.password,
       redirect: false,
+      
     });
+console.log("SignIn response:", res);
 
     setLoading(false);
 
@@ -33,10 +35,8 @@ console.log("Submitting", formData);
       return;
     }
 
-    router.push("/dashboard"); // redirect after login
-  }
-
-  return (
+    router.push(`/`); // redirect after login
+  }  return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
         <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>

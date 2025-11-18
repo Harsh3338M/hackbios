@@ -2,8 +2,10 @@
 import { useState } from "react";
 import { Ship, Plane, Copy } from "lucide-react";
 import { createProduct } from "@/lib/Product";
+import { useSession } from "next-auth/react";
 
 export default function Page() {
+  const { data: session } = useSession();
   const [formData, setFormData] = useState({
     productName: "",
     productType: "",
@@ -102,7 +104,12 @@ export default function Page() {
         return;
       }
     }
-  
+  const id = session?.user?.id 
+  if (!id) {
+    alert("You must be logged in to submit a product");
+    return;
+  }
+  // TODO: Replace with actual logged-in user ID
     // Convert frontend → Prisma
     const prismaPayload = {
       name: formData.productName,

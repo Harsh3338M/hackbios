@@ -1,5 +1,5 @@
 "use client"
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 
@@ -32,14 +32,18 @@ const Navbar = () => {
         <li className="cursor-pointer hover:text-blue-600 transition">About</li>
 
         {/* Buttons */}
-        {session ? (<Link href={`/user/${session.user?.id}`} className={`px-4 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition`}>Logged in as {session.user?.fullName}</Link>) : (<div>
+        {session ? (<div><Link href={`/user/${session.user?.id}`} className={`px-4 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition`}>Logged in as {session.user?.fullName}</Link>   <button onClick={() => signOut()} className="px-4 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+          Sign Out
+        </button></div>) : (<div>
       <Link href="/register" className="px-4 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
         Sign In
       </Link>
+      <Link href="/login" className="px-4 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+        Log In
+      </Link>
       </div>)}
-        <button className="px-4 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
-          Sign Out
-        </button>
+
+       
       </ul>
     </nav>
   );
